@@ -1,31 +1,8 @@
-let ramens = [];
+// Base URL for the API
+const ramenUrl = 'http://localhost:3000/ramens';
 
-document.addEventListener('DOMContentLoaded', main);
-
-function main() {
-  document.addEventListener('DOMContentLoaded', () => {
-    displayRamens();
-    addSubmitListener();
-  });
-}
-
-function displayRamens() {
-  getRamens().then((data) => {
-    ramens = data;
-    const ramenMenu = document.getElementById('ramen-menu');
-    ramenMenu.innerHTML = '';
-    ramens.forEach((ramen) => {
-      const img = document.createElement('img');
-      img.src = ramen.image;
-      img.alt = ramen.name;
-      img.addEventListener('click', () => handleClick(ramen));
-      ramenMenu.appendChild(img);
-    });
-  });
-}
-
-function handleClick(ramen) {
-  const ramenDetail = document.getElementById('ramen-detail');
+// Callback to handle click on ramen image
+const handleClick = (ramen) => {
   const detailImage = document.querySelector('.detail-image');
   const nameElement = document.querySelector('.name');
   const restaurantElement = document.querySelector('.restaurant');
@@ -37,26 +14,69 @@ function handleClick(ramen) {
   restaurantElement.textContent = ramen.restaurant;
   ratingDisplay.textContent = ramen.rating;
   commentDisplay.textContent = ramen.comment;
-}
+};
 
-function addSubmitListener() {
-  const form = document.getElementById('new-ramen');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const newRamen = {
-      name: formData.get('name'),
-      restaurant: formData.get('restaurant'),
-      image: formData.get('image'),
-      rating: formData.get('rating'),
-      comment: formData.get('new-comment'),
-    };
+// Callback to add event listener to submit button in new-ramen form
+const addSubmitListener = () => {
+  const newRamenForm = document.getElementById('new-ramen');
+  newRamenForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = document.getElementById('new-name').value;
+    const restaurant = document.getElementById('new-restaurant').value;
+    const image = document.getElementById('new-image').value;
+    const rating = document.getElementById('new-rating').value;
+    const comment = document.getElementById('new-comment').value;
+    const newRamen = { name, restaurant, image, rating, comment };
+
+    // Create a new img element for the new ramen and append it to the ramen-menu div
     const img = document.createElement('img');
     img.src = newRamen.image;
     img.alt = newRamen.name;
     img.addEventListener('click', () => handleClick(newRamen));
     document.getElementById('ramen-menu').appendChild(img);
   });
-}
+};
 
+// Function to fetch and display all ramens
+const displayRamens = () => {
+  fetch(ramenUrl)
+    .then(res => res.json())
+    .then(data => {
+      const ramenMenuDiv = document.getElementById('ramen-menu');
+      data.forEach(ramen => {
+        const img = document.createElement('img');
+        img.src = ramen.image;
+        img.alt = ramen.name;
+        img.addEventListener('click', () => handleClick(ramen));
+        ramenMenuDiv.appendChild(img);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching ramens:', error);
+    });
+};
+
+// Function to display ramens on the view page
+const displayRamensOnTheViewPage = (ramensArray) => {
+  // Add code to display ramens on the view page
+};
+
+// Main function to start the program logic
+const main = () => {
+  // Invoke displayRamens and addSubmitListener after the DOM has fully loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    displayRamens();
+    addSubmitListener();
+  });
+};
+
+// Invoke main function to start the program logic
 main();
+
+// Export functions for testing
+export {
+  displayRamens,
+  addSubmitListener,
+  handleClick,
+  main,
+};
