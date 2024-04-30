@@ -3,17 +3,7 @@ const ramenUrl = 'http://localhost:3000/ramens';
 
 // Callback to handle click on ramen image
 const handleClick = (ramen) => {
-  const detailImage = document.querySelector('.detail-image');
-  const nameElement = document.querySelector('.name');
-  const restaurantElement = document.querySelector('.restaurant');
-  const ratingDisplay = document.getElementById('rating-display');
-  const commentDisplay = document.getElementById('comment-display');
-
-  detailImage.src = ramen.image;
-  nameElement.textContent = ramen.name;
-  restaurantElement.textContent = ramen.restaurant;
-  ratingDisplay.textContent = ramen.rating;
-  commentDisplay.textContent = ramen.comment;
+  // Add code to display ramen details in the ramen-detail div
 };
 
 // Callback to add event listener to submit button in new-ramen form
@@ -28,12 +18,7 @@ const addSubmitListener = () => {
     const comment = document.getElementById('new-comment').value;
     const newRamen = { name, restaurant, image, rating, comment };
 
-    // Create a new img element for the new ramen and append it to the ramen-menu div
-    const img = document.createElement('img');
-    img.src = newRamen.image;
-    img.alt = newRamen.name;
-    img.addEventListener('click', () => handleClick(newRamen));
-    document.getElementById('ramen-menu').appendChild(img);
+    // Add code to create a new ramen and add it to the ramen-menu div
   });
 };
 
@@ -63,11 +48,10 @@ const displayRamensOnTheViewPage = (ramensArray) => {
 
 // Main function to start the program logic
 const main = () => {
-  // Invoke displayRamens and addSubmitListener after the DOM has fully loaded
-  document.addEventListener('DOMContentLoaded', () => {
-    displayRamens();
-    addSubmitListener();
-  });
+  // Invoke displayRamens here
+  // Invoke addSubmitListener here
+  displayRamens();
+  addSubmitListener();
 };
 
 // Invoke main function to start the program logic
